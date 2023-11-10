@@ -27,9 +27,9 @@ class TaskmanagerApplicationTests {
     public void getTasksTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/tasks"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("zadanie1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].title").value("zadanie2"));
     }
 
@@ -64,6 +64,24 @@ class TaskmanagerApplicationTests {
 
     @Test
     void contextLoads() {
+    }
+
+    @Test
+    public void postUserTest() throws Exception {
+
+        // Wykonanie żądania POST
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "        \"name\": \"Mariusz\",\n" +
+                                "        \"surname\": \"Pudzian\",\n" +
+                                "        \"email\": \"pudzian@mariusz.com\"\n" +
+                                "    }"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Mariusz"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.surname").value("Pudzian"));
+
     }
 
 
