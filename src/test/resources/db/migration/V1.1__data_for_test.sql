@@ -1,3 +1,3 @@
 insert into tasks values
-(1,'zadanie1','zrob dobrze','to do'),
-(2,'zadanie2','zrob bardzo dobrze','to do');
+(4,'zadanie1','zrob dobrze','to do'),
+(5,'zadanie2','zrob bardzo dobrze','to do');

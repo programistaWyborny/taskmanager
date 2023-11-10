@@ -23,6 +23,9 @@ public class TaskEntity {
     private String description;
     private String status;
 
-
-
+    public TaskEntity(String title, String description, String status) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
 }

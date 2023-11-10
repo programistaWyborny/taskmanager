@@ -28,4 +28,10 @@ public class TaskService {
     }
 
 
+    public TaskResponse addTask(AddTaskRequest request) {
+        TaskEntity taskEntity = new TaskEntity(request.getTitle(), request.getDescription(), request.getStatus());
+        TaskEntity savedEntity = taskRepository.save(taskEntity);
+        TaskResponse taskResponse = getTaskResponse(savedEntity);
+        return taskResponse;
+    }
 }
