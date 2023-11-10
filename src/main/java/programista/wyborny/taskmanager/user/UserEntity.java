@@ -1,8 +1,11 @@
 package programista.wyborny.taskmanager.user;
 
 import lombok.*;
+import programista.wyborny.taskmanager.task.TaskEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +23,9 @@ public class UserEntity {
     private String name;
     private String surname;
     private String email;
+
+    @ManyToMany(mappedBy = "courses")
+    private Set<TaskEntity> students = new HashSet<>();
 
     public UserEntity(String name, String surname, String email){
         this.name = name;
