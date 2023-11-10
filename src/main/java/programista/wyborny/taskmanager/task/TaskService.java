@@ -34,4 +34,8 @@ public class TaskService {
         TaskResponse taskResponse = getTaskResponse(savedEntity);
         return taskResponse;
     }
+
+    public void delete(Integer id) {
+        taskRepository.deleteById(id);
+    }
 }
