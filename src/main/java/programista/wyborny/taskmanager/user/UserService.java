@@ -46,9 +46,9 @@ public class UserService {
     @Transactional
     public void delete(Integer id) {
         UserEntity userEntity = userRepository.findById(id)
-                .get();
+                .orElseThrow(UserNotNoundException::new);
         userEntity.getTasks().forEach(taskEntity -> taskEntity.getUsers().remove(userEntity));
-        userEntity.setTasks(Set.of());
+        userEntity.getTasks().clear();
         userRepository.deleteById(id);
     }
 
