@@ -69,7 +69,7 @@ public class TaskService {
             throw (new BadRequestException());
         }
 
-        if(request.status == null && request.userId != null){
+        if(request.status == null){
             TaskEntity taskEntity = taskRepository.findById(taskId)
                     .orElseThrow(() -> new TaskNotNoundException());
             UserEntity userEntity = userRepository.findById(request.getUserId())
