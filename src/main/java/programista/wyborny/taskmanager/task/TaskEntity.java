@@ -5,8 +5,6 @@ import lombok.*;
 import programista.wyborny.taskmanager.user.UserEntity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -29,11 +27,12 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_task",
-            joinColumns = { @JoinColumn(name = "task_id") },
-            inverseJoinColumns =  @JoinColumn(name = "user_id")) @ToString.Exclude
+            joinColumns = {@JoinColumn(name = "task_id")},
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
     @JsonManagedReference
     private Set<UserEntity> users;
 

@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String surname;
@@ -29,7 +29,7 @@ public class UserEntity {
     @JsonBackReference
     private Set<TaskEntity> tasks = new HashSet<>();
 
-    public UserEntity(String name, String surname, String email){
+    public UserEntity(String name, String surname, String email) {
         this.name = name;
         this.surname = surname;
         this.email = email;

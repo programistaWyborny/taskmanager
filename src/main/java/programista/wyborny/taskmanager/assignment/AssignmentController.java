@@ -13,7 +13,7 @@ public class AssignmentController {
     private final AssignmentService assignmentService;
 
     @PostMapping
-    void addAssignment(@RequestBody AddAssignmentRequest assignmentRequest, @RequestAttribute Integer assidnmentId){
+    void addAssignment(@RequestBody AddAssignmentRequest assignmentRequest, @RequestAttribute Integer assidnmentId) {
 
     }
 

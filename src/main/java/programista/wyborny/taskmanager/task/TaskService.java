@@ -1,9 +1,10 @@
 package programista.wyborny.taskmanager.task;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import programista.wyborny.taskmanager.user.UserEntity;
+import programista.wyborny.taskmanager.user.UserNotNoundException;
+import programista.wyborny.taskmanager.user.UserRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
     public List<TaskResponse> getTasks() {
         return taskRepository.findAll()
@@ -34,7 +36,7 @@ public class TaskService {
                 taskEntity.getStatus());
     }
 
-    private TaskByIdResponse getTaskByIdResponse(TaskEntity taskEntity){
+    private TaskByIdResponse getTaskByIdResponse(TaskEntity taskEntity) {
         return new TaskByIdResponse(taskEntity.getId(),
                 taskEntity.getTitle(),
                 taskEntity.getDescription(),
@@ -54,7 +56,12 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public void addUserToTask(AddUserToTaskRequest request) {
-
+    public void addUserToTask(Integer taskId, AddUserToTaskRequest request) {
+        TaskEntity taskEntity = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotNoundException());
+        UserEntity userEntity = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new UserNotNoundException());
+        taskEntity.getUsers().add(userEntity);
+        taskRepository.save(taskEntity);
     }
 }
