@@ -24,8 +24,8 @@ public class UserEntity {
     private String surname;
     private String email;
 
-    @ManyToMany(mappedBy = "courses")
-    private Set<TaskEntity> students = new HashSet<>();
+    @ManyToMany(mappedBy = "users")
+    private Set<TaskEntity> tasks = new HashSet<>();
 
     public UserEntity(String name, String surname, String email){
         this.name = name;

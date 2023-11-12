@@ -6,5 +6,5 @@ import lombok.Value;
 public class AddTaskRequest {
     String title;
     String description;
-    String status;
+    Status status;
 }

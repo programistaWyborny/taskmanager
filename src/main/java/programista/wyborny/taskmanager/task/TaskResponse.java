@@ -7,5 +7,5 @@ public class TaskResponse {
     int id;
     String title;
     String description;
-    String status;
+    Status status;
 }

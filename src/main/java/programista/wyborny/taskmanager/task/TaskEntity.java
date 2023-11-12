@@ -24,17 +24,18 @@ public class TaskEntity {
     private Integer id;
     private String title;
     private String description;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "id",
+            name = "user_task",
             joinColumns = { @JoinColumn(name = "task_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
-    )
-    private Set<UserEntity> courses = new HashSet<>();
+            inverseJoinColumns =  @JoinColumn(name = "users")) @ToString.Exclude
+    private Set<UserEntity> users;
 
-    public TaskEntity(String title, String description, String status) {
+    public TaskEntity(String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;
