@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    UserResponse getUsers(@PathVariable Integer id) throws ChangeSetPersister.NotFoundException {
+    UserResponse getUsers(@PathVariable Integer id) {
         return userService.getUsers(id);
     }
 
