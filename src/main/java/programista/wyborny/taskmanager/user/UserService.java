@@ -2,8 +2,10 @@ package programista.wyborny.taskmanager.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +43,12 @@ public class UserService {
         return userResponse;
     }
 
+    @Transactional
     public void delete(Integer id) {
+        UserEntity userEntity = userRepository.findById(id)
+                .get();
+        userEntity.getTasks().forEach(taskEntity -> taskEntity.getUsers().remove(userEntity));
+        userEntity.setTasks(Set.of());
         userRepository.deleteById(id);
     }
 
