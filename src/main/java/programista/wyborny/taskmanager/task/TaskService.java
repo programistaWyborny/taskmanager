@@ -33,7 +33,8 @@ public class TaskService {
         return new TaskResponse(taskEntity.getId(),
                 taskEntity.getTitle(),
                 taskEntity.getDescription(),
-                taskEntity.getStatus());
+                taskEntity.getStatus(),
+                taskEntity.getDeadline());
     }
 
     private TaskByIdResponse getTaskByIdResponse(TaskEntity taskEntity) {
@@ -41,12 +42,13 @@ public class TaskService {
                 taskEntity.getTitle(),
                 taskEntity.getDescription(),
                 taskEntity.getStatus(),
+                taskEntity.getDeadline(),
                 taskEntity.getUsers());
     }
 
 
     public TaskResponse addTask(AddTaskRequest request) {
-        TaskEntity taskEntity = new TaskEntity(request.getTitle(), request.getDescription(), request.getStatus());
+        TaskEntity taskEntity = new TaskEntity(request.getTitle(), request.getDescription(), request.getStatus(), request.getDeadline());
         TaskEntity savedEntity = taskRepository.save(taskEntity);
         TaskResponse taskResponse = getTaskResponse(savedEntity);
         return taskResponse;
