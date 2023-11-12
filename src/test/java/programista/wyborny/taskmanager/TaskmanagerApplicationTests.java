@@ -43,7 +43,7 @@ class TaskmanagerApplicationTests {
                         .content("{\n" +
                                 "        \"title\": \"zadanie80\",\n" +
                                 "        \"description\": \"Szybko\",\n" +
-                                "        \"status\": \"to do\"\n" +
+                                "        \"status\": \"TO_DO\"\n" +
                                 "    }"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
