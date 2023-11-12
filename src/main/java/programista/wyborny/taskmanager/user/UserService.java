@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,9 +45,9 @@ public class UserService {
     @Transactional
     public void delete(Integer id) {
         UserEntity userEntity = userRepository.findById(id)
-                .get();
+                .orElseThrow(UserNotNoundException::new);
         userEntity.getTasks().forEach(taskEntity -> taskEntity.getUsers().remove(userEntity));
-        userEntity.setTasks(Set.of());
+        userEntity.getTasks().clear();
         userRepository.deleteById(id);
     }
 

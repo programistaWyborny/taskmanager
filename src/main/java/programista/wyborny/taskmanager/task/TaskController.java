@@ -13,8 +13,8 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping()
-    List<TaskResponse> getTasks() {
-        return taskService.getTasks();
+    List<TaskResponse> getTasks(@RequestParam(required = false) Status status) {
+        return taskService.getTasks(status);
     }
 
     @GetMapping("/{id}")
