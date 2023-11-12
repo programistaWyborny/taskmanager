@@ -15,7 +15,7 @@ public class AssignmentService {
     private final UserService userService;
 
     @Transactional
-    public void addAssignment(Integer userId, Integer taskId){
+    public void addAssignment(Integer userId, Integer taskId) {
 
     }
 

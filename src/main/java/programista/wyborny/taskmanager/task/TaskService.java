@@ -2,6 +2,9 @@ package programista.wyborny.taskmanager.task;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import programista.wyborny.taskmanager.user.UserEntity;
+import programista.wyborny.taskmanager.user.UserNotNoundException;
+import programista.wyborny.taskmanager.user.UserRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,13 +14,19 @@ import java.util.stream.Collectors;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
     public List<TaskResponse> getTasks() {
         return taskRepository.findAll()
                 .stream()
                 .map(this::getTaskResponse)
                 .collect(Collectors.toList());
+    }
 
+    public TaskByIdResponse getTasks(Integer id) {
+        return taskRepository.findById(id)
+                .map(this::getTaskByIdResponse)
+                .orElseThrow(TaskNotNoundException::new);
     }
 
     private TaskResponse getTaskResponse(TaskEntity taskEntity) {
@@ -25,6 +34,14 @@ public class TaskService {
                 taskEntity.getTitle(),
                 taskEntity.getDescription(),
                 taskEntity.getStatus());
+    }
+
+    private TaskByIdResponse getTaskByIdResponse(TaskEntity taskEntity) {
+        return new TaskByIdResponse(taskEntity.getId(),
+                taskEntity.getTitle(),
+                taskEntity.getDescription(),
+                taskEntity.getStatus(),
+                taskEntity.getUsers());
     }
 
 
@@ -37,5 +54,14 @@ public class TaskService {
 
     public void delete(Integer id) {
         taskRepository.deleteById(id);
+    }
+
+    public void addUserToTask(Integer taskId, AddUserToTaskRequest request) {
+        TaskEntity taskEntity = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotNoundException());
+        UserEntity userEntity = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new UserNotNoundException());
+        taskEntity.getUsers().add(userEntity);
+        taskRepository.save(taskEntity);
     }
 }

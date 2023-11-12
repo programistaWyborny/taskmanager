@@ -12,13 +12,19 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public List<UserResponse> getUsers(){
+    public List<UserResponse> getUsers() {
         return userRepository.findAll()
                 .stream()
                 .map(this::getUserResponse)
                 .collect(Collectors.toList());
-
     }
+
+    public UserResponse getUsers(Integer id) {
+        return userRepository.findById(id)
+                .map(this::getUserResponse)
+                .orElseThrow(UserNotNoundException::new);
+    }
+
 
     private UserResponse getUserResponse(UserEntity userEntity) {
         return new UserResponse(userEntity.getId(),
@@ -27,7 +33,7 @@ public class UserService {
                 userEntity.getEmail());
     }
 
-    public UserResponse addUser(AddUserRequest request){
+    public UserResponse addUser(AddUserRequest request) {
         UserEntity userEntity = new UserEntity(request.getName(), request.getSurname(),
                 request.getEmail());
         UserEntity savedEntity = userRepository.save(userEntity);
@@ -35,7 +41,7 @@ public class UserService {
         return userResponse;
     }
 
-    public void delete(Integer id){
+    public void delete(Integer id) {
         userRepository.deleteById(id);
     }
 

@@ -1,11 +1,10 @@
 package programista.wyborny.taskmanager.task;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import programista.wyborny.taskmanager.user.UserEntity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -24,17 +23,20 @@ public class TaskEntity {
     private Integer id;
     private String title;
     private String description;
-    private String status;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "id",
-            joinColumns = { @JoinColumn(name = "task_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
-    )
-    private Set<UserEntity> courses = new HashSet<>();
+            name = "user_task",
+            joinColumns = {@JoinColumn(name = "task_id")},
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
+    @JsonManagedReference
+    private Set<UserEntity> users;
 
-    public TaskEntity(String title, String description, String status) {
+    public TaskEntity(String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;
