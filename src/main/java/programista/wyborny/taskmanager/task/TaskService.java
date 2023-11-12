@@ -55,6 +55,10 @@ public class TaskService {
     }
 
     public void delete(Integer id) {
+        TaskEntity taskEntity = taskRepository.findById(id)
+                        .orElseThrow(TaskNotNoundException::new);
+        taskEntity.getUsers().forEach(userEntity -> userEntity.getTasks().remove(taskEntity));
+        taskEntity.getUsers().clear();
         taskRepository.deleteById(id);
     }
 
