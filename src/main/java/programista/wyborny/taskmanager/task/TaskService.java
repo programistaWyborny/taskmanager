@@ -57,11 +57,26 @@ public class TaskService {
     }
 
     public void addUserToTask(Integer taskId, AddUserToTaskRequest request) {
-        TaskEntity taskEntity = taskRepository.findById(taskId)
-                .orElseThrow(() -> new TaskNotNoundException());
-        UserEntity userEntity = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new UserNotNoundException());
-        taskEntity.getUsers().add(userEntity);
-        taskRepository.save(taskEntity);
+
+        if ((request.status == null && request.userId == null) ||
+                (request.status != null && request.userId != null)){
+            throw (new BadRequestException());
+        }
+
+        if(request.status == null && request.userId != null){
+            TaskEntity taskEntity = taskRepository.findById(taskId)
+                    .orElseThrow(() -> new TaskNotNoundException());
+            UserEntity userEntity = userRepository.findById(request.getUserId())
+                    .orElseThrow(() -> new UserNotNoundException());
+            taskEntity.getUsers().add(userEntity);
+            taskRepository.save(taskEntity);
+        }
+        if(request.status != null && request.userId == null){
+            TaskEntity taskEntity = taskRepository.findById(taskId)
+                    .orElseThrow(() -> new TaskNotNoundException());
+            taskEntity.setStatus(request.status);
+            taskRepository.save(taskEntity);
+        }
+
     }
 }
