@@ -16,8 +16,8 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
 
-    public List<TaskResponse> getTasks() {
-        return taskRepository.findAll()
+    public List<TaskResponse> getTasks(Status status) {
+        return taskRepository.findAllByStatus(status)
                 .stream()
                 .map(this::getTaskResponse)
                 .collect(Collectors.toList());
