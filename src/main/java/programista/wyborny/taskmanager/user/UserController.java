@@ -1,6 +1,7 @@
 package programista.wyborny.taskmanager.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,11 @@ public class UserController {
     @GetMapping()
     List<UserResponse> getUsers(){
         return userService.getUsers();
+    }
+
+    @GetMapping("/{id}")
+    UserResponse getUsers(@PathVariable Integer id) throws ChangeSetPersister.NotFoundException {
+        return userService.getUsers(id);
     }
 
     @PostMapping()

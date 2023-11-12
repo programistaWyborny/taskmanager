@@ -1,5 +1,6 @@
 package programista.wyborny.taskmanager.task;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import programista.wyborny.taskmanager.user.UserEntity;
 
@@ -28,11 +29,12 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_task",
             joinColumns = { @JoinColumn(name = "task_id") },
-            inverseJoinColumns =  @JoinColumn(name = "users")) @ToString.Exclude
+            inverseJoinColumns =  @JoinColumn(name = "user_id")) @ToString.Exclude
+    @JsonManagedReference
     private Set<UserEntity> users;
 
     public TaskEntity(String title, String description, Status status) {

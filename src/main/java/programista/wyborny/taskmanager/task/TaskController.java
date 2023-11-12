@@ -17,6 +17,11 @@ public class TaskController {
         return taskService.getTasks();
     }
 
+    @GetMapping("/{id}")
+    TaskByIdResponse getTasks(@PathVariable Integer id){
+        return taskService.getTasks(id);
+    }
+
     @PostMapping()
     TaskResponse addTask(@RequestBody AddTaskRequest request){
         return taskService.addTask(request);
@@ -26,7 +31,11 @@ public class TaskController {
     void deleteTask(@PathVariable Integer id){
         taskService.delete(id);
     }
-    
+
+    @PatchMapping("/{id}")
+    void addUserToTask(@RequestBody AddUserToTaskRequest request){
+        taskService.addUserToTask(request);
+    }
 
 
 }

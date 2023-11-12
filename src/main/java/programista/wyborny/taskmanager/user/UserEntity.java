@@ -1,5 +1,6 @@
 package programista.wyborny.taskmanager.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import programista.wyborny.taskmanager.task.TaskEntity;
 
@@ -25,6 +26,7 @@ public class UserEntity {
     private String email;
 
     @ManyToMany(mappedBy = "users")
+    @JsonBackReference
     private Set<TaskEntity> tasks = new HashSet<>();
 
     public UserEntity(String name, String surname, String email){

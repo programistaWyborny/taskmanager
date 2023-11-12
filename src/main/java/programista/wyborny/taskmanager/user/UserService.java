@@ -17,8 +17,15 @@ public class UserService {
                 .stream()
                 .map(this::getUserResponse)
                 .collect(Collectors.toList());
-
     }
+
+    public UserResponse getUsers(Integer id) {
+        return userRepository.findById(id)
+                .map(this::getUserResponse)
+                .orElseThrow(UserNotNoundException::new);
+    }
+
+
 
     private UserResponse getUserResponse(UserEntity userEntity) {
         return new UserResponse(userEntity.getId(),
