@@ -5,6 +5,7 @@ import lombok.*;
 import programista.wyborny.taskmanager.user.UserEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -23,6 +24,7 @@ public class TaskEntity {
     private Integer id;
     private String title;
     private String description;
+    private LocalDate deadline;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -36,9 +38,10 @@ public class TaskEntity {
     @JsonManagedReference
     private Set<UserEntity> users;
 
-    public TaskEntity(String title, String description, Status status) {
+    public TaskEntity(String title, String description, Status status, LocalDate deadline) {
         this.title = title;
         this.description = description;
         this.status = status;
+        this.deadline = deadline;
     }
 }
